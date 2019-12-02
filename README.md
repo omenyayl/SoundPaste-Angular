@@ -1,6 +1,15 @@
 # SoundPaste
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.19.
+Transmit/Receive text data over sound for easy copying and pasting device to device. (Paired with Android app called SoundPaste) 
+
+## Important note
+
+Before building/running this app, make sure to create a file src/app/environment.ts with the following contents:
+
+```
+const chirpSecret = 'YOUR_CHIRP_APP_SECRET';
+export { chirpSecret };
+```
 
 ## Development server
 
