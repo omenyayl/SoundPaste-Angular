@@ -7,8 +7,8 @@ Transmit/Receive text data over sound for easy copying and pasting device to dev
 Before building/running this app, make sure to create a file src/app/environment.ts with the following contents:
 
 ```
-const chirpSecret = 'YOUR_CHIRP_APP_SECRET';
-export { chirpSecret };
+const CHIRP_SECRET = 'YOUR_CHIRP_APP_SECRET';
+export { CHIRP_SECRET };
 ```
 
 ## Development server
