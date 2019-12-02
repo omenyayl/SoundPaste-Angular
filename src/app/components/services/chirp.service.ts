@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CHIRP_SECRET } from '../../environment';
+import { CHIRP_KEY } from '../../environment';
 
 declare var ChirpSDK: any; // declaration to use the external chirp SDK script
 const Chirp = ChirpSDK.Chirp; // comes from the external chirp SDK script
@@ -16,7 +16,7 @@ export class ChirpService {
   sdk = null;
   constructor() {
     Chirp({
-      key: CHIRP_SECRET,
+      key: CHIRP_KEY,
       onReceived: this.onChirpReceived.bind(this)
     }).then(this.onChirpInit.bind(this))
       .catch(ChirpService.onChirpError);
