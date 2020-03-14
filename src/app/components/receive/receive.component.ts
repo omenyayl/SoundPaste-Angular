@@ -1,5 +1,6 @@
 import {Component, NgZone, OnInit} from '@angular/core';
 import {ChirpService} from '../services/chirp.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-receive',
@@ -9,14 +10,24 @@ import {ChirpService} from '../services/chirp.service';
 export class ReceiveComponent implements OnInit {
   chirps: string[] = [];
   constructor(private chirp: ChirpService,
+              private snackbar: MatSnackBar,
               private ngZone: NgZone) { }
 
   ngOnInit() {
     this.chirp.subscribe((data: string) => {
       this.ngZone.run(() => {
-        this.chirps.push(data);
+        if (!data) {
+          this.snackbar.open('Unable to process the message, check your internet connection.', null, {duration: 2000});
+        } else {
+          this.chirps.push(data);
+          this.snackbar.open('Message Received', null, {duration: 2000});
+        }
       });
     });
+    // this.api.getSnippet(1)
+    //   .subscribe(value => {
+    //     console.log(value);
+    //   });
   }
 
 }

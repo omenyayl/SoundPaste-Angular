@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import { CHIRP_KEY } from '../../environment';
+import { Buffer } from 'buffer';
+import {ApiService} from './api.service';
+import {Snippet} from '../types/Snippet';
 
 declare var ChirpSDK: any; // declaration to use the external chirp SDK script
 const Chirp = ChirpSDK.Chirp; // comes from the external chirp SDK script
@@ -14,7 +17,7 @@ const Chirp = ChirpSDK.Chirp; // comes from the external chirp SDK script
 export class ChirpService {
   listeners = [];
   sdk = null;
-  constructor() {
+  constructor(private api: ApiService) {
     Chirp({
       key: CHIRP_KEY,
       onReceived: this.onChirpReceived.bind(this)
@@ -48,6 +51,8 @@ export class ChirpService {
    */
   onChirpStart(sdk) {
     this.sdk = sdk;
+    // this.onChirpReceived(Uint8Array.from([0, 0, 0, 0, 0, 126, 201, 1])); // 8308993
+    this.onChirpReceived(Uint8Array.from([0, 0, 0, 0, 0, 127, 88, 10]));
   }
 
   /**
@@ -56,11 +61,15 @@ export class ChirpService {
    */
   onChirpReceived(data: Uint8Array) {
     if (data.length > 0) {
-      const asciiData = ChirpSDK.toAscii(data);
-      console.log('Chirp received: ' + asciiData);
-      for (const listener of this.listeners) {
-        listener(asciiData);
-      }
+      // const asciiData = ChirpSDK.toAscii(data);
+      const id = Buffer.from(data).readUInt32BE(4);
+      this.api.getSnippet(id).subscribe(s => {
+        console.log('Chirp received: ' + id);
+        console.log('Data received: ' + s.content);
+        for (const listener of this.listeners) {
+          listener(s.content);
+        }
+      });
     } else {
       console.log('Chirp decode failed');
     }
@@ -70,7 +79,7 @@ export class ChirpService {
    * Subscribe to received chirps via microphone
    * @param listener Callback that is called whenever Chirp encounters outside transmissions
    */
-  subscribe(listener: (data: string) => void) {
+  subscribe(listener: (data: any) => void) {
     this.listeners.push(listener);
   }
 

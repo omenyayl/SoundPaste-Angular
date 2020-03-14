@@ -1,15 +1,34 @@
 <div>
-  <mat-card>
-    <mat-card-title>Received Data</mat-card-title>
-    <mat-card-content>
-      <mat-list>
-          <mat-list-item *ngFor="let chirp of chirps; let i = index">
-            {{chirp}}
-            <mat-divider *ngIf="i < chirps.length - 1"></mat-divider>
-          </mat-list-item>
-      </mat-list>
+<!--  <mat-card>-->
+<!--    <mat-card-title>Received Data</mat-card-title>-->
+<!--    <mat-card-content>-->
+<!--      <mat-list>-->
+<!--          <mat-list-item style="white-space: pre-wrap" *ngFor="let chirp of chirps; let i = index">-->
+<!--            <mat-expansion-panel>-->
+<!--              <mat-expansion-panel-header>-->
+<!--                <mat-panel-description>-->
+<!--                  This is a summary of the content-->
+<!--                </mat-panel-description>-->
+<!--              </mat-expansion-panel-header>-->
+<!--              <p>{{chirp}}</p>-->
+<!--            </mat-expansion-panel>-->
+<!--            <mat-divider *ngIf="i < chirps.length - 1"></mat-divider>-->
+<!--          </mat-list-item>-->
+<!--      </mat-list>-->
 
-    </mat-card-content>
-    <mat-card-subtitle>Received sound data will appear in the above list. Check your microphone settings if they don't appear.</mat-card-subtitle>
-  </mat-card>
+<!--    </mat-card-content>-->
+<!--    <mat-card-subtitle>Received sound data will appear in the above list. Check your microphone settings if they don't appear.</mat-card-subtitle>-->
+<!--  </mat-card>-->
+
+  <p class="section-heading">Received Data</p>
+  <mat-accordion>
+    <mat-expansion-panel *ngFor="let chirp of chirps; let i = index" [disabled]="chirp.length <= 40">
+      <mat-expansion-panel-header>
+        <mat-panel-description class="snippet-description">
+          {{chirp.length > 40 ? chirp.substring(0, 40).trim() + "..." : chirp}}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <p class="snippet-content">{{chirp}}</p>
+    </mat-expansion-panel>
+  </mat-accordion>
 </div>
