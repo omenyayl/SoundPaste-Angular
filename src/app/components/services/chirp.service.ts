@@ -36,6 +36,23 @@ export class ChirpService {
   }
 
   /**
+   * @param num The number to convert
+   * @return an array of unsigned integers
+   */
+  static longToUInt8Array(num: number): Uint8Array {
+    const len = 8;
+    const a = new Uint8Array(len);
+
+    for (let i = 0; num !== 0 && i < len; i++) {
+      // tslint:disable-next-line:no-bitwise
+      a[len - i - 1] = num & 0xff;
+      // tslint:disable-next-line:no-bitwise
+      num >>= 8;
+    }
+    return a;
+  }
+
+  /**
    * Called when chirp initializes
    * @param sdk Chirp sdk
    */
@@ -62,6 +79,7 @@ export class ChirpService {
   onChirpReceived(data: Uint8Array) {
     if (data.length > 0) {
       // const asciiData = ChirpSDK.toAscii(data);
+      console.log(`chirp data: ${data}`);
       const id = Buffer.from(data).readUInt32BE(4);
       this.api.getSnippet(id).subscribe(s => {
         console.log('Chirp received: ' + id);
@@ -88,12 +106,12 @@ export class ChirpService {
    * @param data The string data to send via sound
    * @param err Error callback, which is non-null if there is an error
    */
-  send(data: string, err: (error: Error) => void) {
+  send(data: (string | number), err: (error: Error) => void) {
     let error: Error = null;
     if (this.sdk == null) {
       error = new Error('Chirp SDK failed initialization.');
     } else {
-      const rc = this.sdk.send(data);
+      const rc = this.sdk.send(typeof data === 'string' ? data : ChirpService.longToUInt8Array(data));
       if (rc !== 0) {
         error = new Error(this.sdk.errorToString(rc));
       }
