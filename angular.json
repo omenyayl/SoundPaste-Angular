@@ -32,7 +32,8 @@
               "src/styles.scss"
             ],
             "scripts": [
-              "./node_modules/chirpsdk/index.js"
+              "./node_modules/chirpsdk/index.js",
+              "./node_modules/gibberish-aes/dist/gibberish-aes-1.0.0.js"
             ]
           },
           "configurations": {

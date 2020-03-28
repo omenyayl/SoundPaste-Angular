@@ -69,7 +69,7 @@ export class ChirpService {
   onChirpStart(sdk) {
     this.sdk = sdk;
     // this.onChirpReceived(Uint8Array.from([0, 0, 0, 0, 0, 126, 201, 1])); // 8308993
-    this.onChirpReceived(Uint8Array.from([0, 0, 0, 0, 0, 127, 88, 10]));
+    // this.onChirpReceived(Uint8Array.from([0, 0, 0, 0, 0, 127, 88, 10]));
   }
 
   /**
@@ -106,12 +106,12 @@ export class ChirpService {
    * @param data The string data to send via sound
    * @param err Error callback, which is non-null if there is an error
    */
-  send(data: (string | number), err: (error: Error) => void) {
+  send(data: Uint8Array, err: (error: Error) => void) {
     let error: Error = null;
     if (this.sdk == null) {
       error = new Error('Chirp SDK failed initialization.');
     } else {
-      const rc = this.sdk.send(typeof data === 'string' ? data : ChirpService.longToUInt8Array(data));
+      const rc = this.sdk.send(data);
       if (rc !== 0) {
         error = new Error(this.sdk.errorToString(rc));
       }
