@@ -3,6 +3,7 @@ import { CHIRP_KEY } from '../../environment';
 import { Buffer } from 'buffer';
 import {ApiService} from './api.service';
 import {Snippet} from '../types/Snippet';
+import {AesService} from './aes.service';
 
 declare var ChirpSDK: any; // declaration to use the external chirp SDK script
 const Chirp = ChirpSDK.Chirp; // comes from the external chirp SDK script
@@ -17,7 +18,8 @@ const Chirp = ChirpSDK.Chirp; // comes from the external chirp SDK script
 export class ChirpService {
   listeners = [];
   sdk = null;
-  constructor(private api: ApiService) {
+  constructor(private api: ApiService,
+              private aes: AesService) {
     Chirp({
       key: CHIRP_KEY,
       onReceived: this.onChirpReceived.bind(this)
@@ -78,15 +80,21 @@ export class ChirpService {
    */
   onChirpReceived(data: Uint8Array) {
     if (data.length > 0) {
-      // const asciiData = ChirpSDK.toAscii(data);
       console.log(`chirp data: ${data}`);
-      const id = Buffer.from(data).readUInt32BE(4);
+      const key = data.slice(0, 16);
+      const idBytes = data.slice(16, data.length);
+      const id = Buffer.from(idBytes).readUInt32BE(0);
       this.api.getSnippet(id).subscribe(s => {
-        console.log('Chirp received: ' + id);
-        console.log('Data received: ' + s.content);
-        for (const listener of this.listeners) {
-          listener(s.content);
-        }
+        const ivCipherText = Uint8Array.from(atob(s.content), c => c.charCodeAt(0));
+        const iv = ivCipherText.slice(0, 16);
+        const cipherText = ivCipherText.slice(16, ivCipherText.length);
+        this.aes.decrypt(cipherText, key, iv).then((message) => {
+          for (const listener of this.listeners) {
+            listener(message);
+          }
+        }).catch(e => {
+          console.error(e);
+        });
       });
     } else {
       console.log('Chirp decode failed');

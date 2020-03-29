@@ -27,7 +27,7 @@ export class ApiService {
   getSnippet(id: number): Observable<Snippet> {
     return this.http.get<Snippet>(ApiService.getSnippetURL(id))
       .pipe(
-        catchError(this.error.handleError<Snippet>('getSnippet', {}))
+        catchError(this.error.handleError<Snippet>('getSnippet', ''))
       );
   }
   postSnippet(snippet: Snippet): Observable<string> {
