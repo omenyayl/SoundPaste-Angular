@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CHIRP_SET } from '../../environment';
+import { CHIRP_KEY } from '../../environment';
 import { Buffer } from 'buffer';
 import {ApiService} from './api.service';
 import {AesService} from './aes.service';
@@ -20,7 +20,7 @@ export class ChirpService {
   constructor(private api: ApiService,
               private aes: AesService) {
     Chirp({
-      key: CHIRP_SET,
+      key: CHIRP_KEY,
       onReceived: this.onChirpReceived.bind(this)
     }).then(this.onChirpInit.bind(this))
       .catch(ChirpService.onChirpError);
