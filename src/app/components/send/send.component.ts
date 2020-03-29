@@ -25,6 +25,10 @@ export class SendComponent implements OnInit {
   }
 
   onClickButtonSend = async () => {
+    if (this.chirp.isSending()) {
+      this.snackbar.open('Already transmitting', null, {duration: 2000});
+      return;
+    }
     if (this.sendText.invalid) {
       this.snackbar.open('Invalid text', null, {duration: 2000});
       return;

@@ -38,23 +38,6 @@ export class ChirpService {
   }
 
   /**
-   * @param num The number to convert
-   * @return an array of unsigned integers
-   */
-  static longToUInt8Array(num: number): Uint8Array {
-    const len = 8;
-    const a = new Uint8Array(len);
-
-    for (let i = 0; num !== 0 && i < len; i++) {
-      // tslint:disable-next-line:no-bitwise
-      a[len - i - 1] = num & 0xff;
-      // tslint:disable-next-line:no-bitwise
-      num >>= 8;
-    }
-    return a;
-  }
-
-  /**
    * Called when chirp initializes
    * @param sdk Chirp sdk
    */
@@ -80,7 +63,7 @@ export class ChirpService {
    */
   onChirpReceived(data: Uint8Array) {
     if (data.length > 0) {
-      console.log(`chirp data: ${data}`);
+      // console.log(`chirp data: ${data}`);
       const key = data.slice(0, 16);
       const idBytes = data.slice(16, data.length);
       const id = Buffer.from(idBytes).readUInt32BE(0);
@@ -125,5 +108,8 @@ export class ChirpService {
       }
     }
     err(error);
+  }
+  isSending(): boolean {
+    return this.sdk.getState() === 3;
   }
 }

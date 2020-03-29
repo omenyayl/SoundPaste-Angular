@@ -24,10 +24,6 @@ export class ReceiveComponent implements OnInit {
         }
       });
     });
-    // this.api.getSnippet(1)
-    //   .subscribe(value => {
-    //     console.log(value);
-    //   });
   }
 
 }
