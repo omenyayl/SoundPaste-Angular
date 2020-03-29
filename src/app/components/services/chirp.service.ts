@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { CHIRP_SET } from '../../environment';
 import { Buffer } from 'buffer';
 import {ApiService} from './api.service';
-import {Snippet} from '../types/Snippet';
 import {AesService} from './aes.service';
 
 declare var ChirpSDK: any; // declaration to use the external chirp SDK script
