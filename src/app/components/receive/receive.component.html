@@ -28,7 +28,8 @@
           {{chirp.length > 40 ? chirp.substring(0, 40).trim() + "..." : chirp}}
         </mat-panel-description>
       </mat-expansion-panel-header>
-      <button mat-raised-button (click)="onClickCopyToClipboard(chirp)">Copy to Clipboard</button>
+      <mat-divider></mat-divider>
+      <button style="margin-top: 0.5em" mat-raised-button (click)="onClickCopyToClipboard(chirp)">Copy to Clipboard</button>
       <pre style="font-family: inherit">{{chirp}}</pre>
     </mat-expansion-panel>
   </mat-accordion>

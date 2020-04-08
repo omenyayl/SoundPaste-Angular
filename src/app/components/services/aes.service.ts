@@ -9,7 +9,6 @@ const CRYPTO_ALGORITHM = {name: 'AES-CBC', length: KEY_LENGTH * 8};
 })
 export class AesService {
   constructor() {
-    GibberishAES.size(128);
   }
   encrypt(data: string): Promise<SnippetPayload> {
     return new Promise<SnippetPayload>(async (resolve) => {
