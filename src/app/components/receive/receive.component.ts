@@ -8,7 +8,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
   styleUrls: ['./receive.component.scss']
 })
 export class ReceiveComponent implements OnInit {
-  chirps: string[] = [];
+  chirps: string[] = ['{\n\t"hello": "world"\n}'];
   constructor(private chirp: ChirpService,
               private snackbar: MatSnackBar,
               private ngZone: NgZone) { }
@@ -24,6 +24,10 @@ export class ReceiveComponent implements OnInit {
         }
       });
     });
+  }
+
+  onClickCopyToClipboard(chirp: string) {
+    console.log('clicked');
   }
 
 }

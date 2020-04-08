@@ -22,13 +22,14 @@
 
   <p class="section-heading">Received Data</p>
   <mat-accordion>
-    <mat-expansion-panel *ngFor="let chirp of chirps; let i = index" [disabled]="chirp.length <= 40">
+    <mat-expansion-panel *ngFor="let chirp of chirps; let i = index">
       <mat-expansion-panel-header>
         <mat-panel-description class="snippet-description">
           {{chirp.length > 40 ? chirp.substring(0, 40).trim() + "..." : chirp}}
         </mat-panel-description>
       </mat-expansion-panel-header>
-      <p class="snippet-content">{{chirp}}</p>
+      <button mat-raised-button (click)="onClickCopyToClipboard(chirp)">Copy to Clipboard</button>
+      <pre style="font-family: inherit">{{chirp}}</pre>
     </mat-expansion-panel>
   </mat-accordion>
 </div>
