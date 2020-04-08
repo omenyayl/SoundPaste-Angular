@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import {ChirpService} from '../services/chirp.service';
-import {MatSnackBar} from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import {ApiService} from '../services/api.service';
 import {AesService} from '../services/aes.service';
 import {Buffer} from 'buffer';

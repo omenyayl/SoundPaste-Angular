@@ -6,17 +6,16 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SendComponent } from './components/send/send.component';
 import { ReceiveComponent } from './components/receive/receive.component';
-import {
-  MatButtonModule,
-  MatCardModule,
-  MatDividerModule,
-  MatFormFieldModule,
-  MatInputModule,
-  MatListModule,
-  MatToolbarModule,
-  MatExpansionModule, MatSnackBarModule
-} from '@angular/material';
-import {} from '@angular/cdk/';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { ClipboardModule } from '@angular/cdk/clipboard';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 
@@ -41,7 +40,8 @@ import {HttpClientModule} from '@angular/common/http';
     MatListModule,
     ReactiveFormsModule,
     MatExpansionModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    ClipboardModule
   ],
   providers: [],
   bootstrap: [AppComponent]

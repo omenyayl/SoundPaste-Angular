@@ -1,6 +1,7 @@
 import {Component, NgZone, OnInit} from '@angular/core';
 import {ChirpService} from '../services/chirp.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {Clipboard} from '@angular/cdk/clipboard';
 
 @Component({
   selector: 'app-receive',
@@ -8,8 +9,9 @@ import {MatSnackBar} from '@angular/material/snack-bar';
   styleUrls: ['./receive.component.scss']
 })
 export class ReceiveComponent implements OnInit {
-  chirps: string[] = ['{\n\t"hello": "world"\n}'];
+  chirps: string[] = [];
   constructor(private chirp: ChirpService,
+              private clipboard: Clipboard,
               private snackbar: MatSnackBar,
               private ngZone: NgZone) { }
 
@@ -27,7 +29,9 @@ export class ReceiveComponent implements OnInit {
   }
 
   onClickCopyToClipboard(chirp: string) {
-    console.log('clicked');
+    if (this.clipboard.copy(chirp)) {
+      this.snackbar.open('Copied the message to clipboard!', null, {duration: 2000});
+    }
   }
 
 }
