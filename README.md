@@ -8,7 +8,8 @@ Before building/running this app, make sure to create a file src/app/environment
 
 ```
 const CHIRP_KEY = 'YOUR_CHIRP_APP_KEY';
-export { CHIRP_KEY };
+const API_URL = 'YOUR_API_URL';
+export { CHIRP_KEY, API_URL };
 ```
 
 ## Development server
